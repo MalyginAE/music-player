@@ -24,7 +24,6 @@ services:
       - discovery.seed_hosts=odfe-node
       - bootstrap.memory_lock=true
       - xpack.security.enabled=false
-      - "ES_JAVA_OPTS=-Xms4096m -Xmx4096m"
     ulimits:
       memlock:
         soft: -1
