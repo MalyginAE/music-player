@@ -1,16 +1,26 @@
-version: '3.3'
+version: '3.5'
 services:
-#  db:
-#    image: postgres:12.16
-#    container_name: postgres
-#    ports:
-#      - "5433:5432"
-#    environment:
-#      - POSTGRES_USER=postgres
-#      - POSTGRES_PASSWORD=postgres
-#      - POSTGRES_DB=demo
-#      - config.support_escapes=true
-  odfe-node:
+  #  db:
+  #    image: postgres:12.16
+  #    container_name: postgres
+  #    ports:
+  #      - "5433:5432"
+  #    environment:
+  #      - POSTGRES_USER=postgres
+  #      - POSTGRES_PASSWORD=postgres
+  #      - POSTGRES_DB=demo
+  #      - config.support_escapes=true
+  #  hotels:
+  #    build:
+  #      context: ./
+  #      dockerfile: Dockerfile
+  #    depends_on:
+  #      - "odfe-node"
+  #    environment:
+  #      - SPRING_DATASOURCE_URL=jdbc:postgresql://192.168.31.233:5433/postgres
+  #    ports:
+  #      - "8080:8080"
+  elk:
     image: elasticsearch:7.17.15
     logging:
       driver: "json-file"
@@ -36,8 +46,28 @@ services:
       - "9600:9600"
     networks:
       - odfe-net
+  app:
+    build:
+      context: ./MusicPlayerDictionary
+      dockerfile: Dockerfile
+    depends_on:
+      - "elk"
+    environment:
+      #      - необходимо прописать ipconfig и вставить сюда ip локальной сети, потому что localhost в контейнере свой
+      - SPRING_ELASTICSEARCH_URIS=172.19.0.2:9200
+      #      - выставил в true ,чтобы скрипты накатывались, можно потом подумать будет как их в образе накатить получше
+    #      - SPRING_LIQUIBASE_ENABLED=true
+    ports:
+      - "8080:8080"
+    networks:
+      - odfe-net
 networks:
   odfe-net:
+    ipam:
+      config:
+        - subnet: 172.51.0.0/24
+
+
 volumes:
   odfe-data:
   db:
