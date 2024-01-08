@@ -1,7 +1,7 @@
 package com.hse.nn.musicplayerdictionary.controller;
 
-import com.hse.nn.musicplayerdictionary.MusicTicketRepository;
 import com.hse.nn.musicplayerdictionary.model.MusicTicket;
+import com.hse.nn.musicplayerdictionary.repository.MusicTicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

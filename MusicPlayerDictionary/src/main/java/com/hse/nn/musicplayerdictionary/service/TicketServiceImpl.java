@@ -1,29 +1,37 @@
 package com.hse.nn.musicplayerdictionary.service;
 
-import com.hse.nn.musicplayerdictionary.MusicTicketRepository;
+import com.hse.nn.musicplayerdictionary.mapper.TicketMapper;
+import com.hse.nn.musicplayerdictionary.model.MusicTicket;
+import com.hse.nn.musicplayerdictionary.model.dto.request.SaveTicketRequest;
+import com.hse.nn.musicplayerdictionary.repository.MusicTicketRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class TicketServiceImpl {
-
+    @Autowired
     private final MusicTicketRepository musicTicketRepository;
-//    private final TicketMapper ticketMapper;
+    @Autowired
+    private final TicketMapper ticketMapper;
 
 //    public Ticket saveIndex(SaveTicketIndexRequest request){
-//        return ticketRepository.save(ticketMapper.ticketDtoToTicket(request.getTicketDto()));
+//        return musicTicketRepository.save(ticketMapper.ticketDtoToTicket(request.getTicketDto()));
 //    }
-//
-//    public List<Ticket> saveBulkIndex(SaveTicketBulkIndexRequest request) {
-//        List<Ticket> tickets = request
-//                .getTickets()
-//                .stream()
-//                .map(ticketDto -> ticketMapper.ticketDtoToTicket(ticketDto))
-//                .collect(Collectors.toList());
-//        return (List<Ticket>) ticketRepository.saveAll(tickets);
-//    }
-//
+
+    public List<MusicTicket> saveBulk(SaveTicketRequest request) {
+        List<MusicTicket> tickets = request
+                .getTickets()
+                .stream()
+                .map(ticketMapper::ticketDtoToTicket)
+                .collect(Collectors.toList());
+        return (List<MusicTicket>) musicTicketRepository.saveAll(tickets);
+    }
+
 //    public FindByNameContainingResponse findByNameContaining(String name){
 //        List<TicketDto> ticketDtos = ticketRepository
 //                .findByPassengerNameContaining(name)
