@@ -14,6 +14,5 @@ public class MusicPlayerDictionaryApplication {
 	private MusicTicketRepository musicTicketRepository;
 	public static void main(String[] args) {
 		ConfigurableApplicationContext applicationContext = SpringApplication.run(MusicPlayerDictionaryApplication.class, args);
-		applicationContext.getBean("ticketMapper");
 	}
 }
