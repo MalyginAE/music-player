@@ -54,7 +54,7 @@ services:
       - "elk"
     environment:
       #      - необходимо прописать ipconfig и вставить сюда ip локальной сети, потому что localhost в контейнере свой
-      - SPRING_ELASTICSEARCH_URIS=172.19.0.2:9200
+      - SPRING_ELASTICSEARCH_URIS=172.17.0.0:9200
       #      - выставил в true ,чтобы скрипты накатывались, можно потом подумать будет как их в образе накатить получше
     #      - SPRING_LIQUIBASE_ENABLED=true
     ports:
