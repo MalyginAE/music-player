@@ -32,7 +32,7 @@ public class MainController {
         return ResponseEntity.ok(saved);
     }
 
-    @GetMapping(value = "/music/{id}", produces = "audio/mpeg")
+    @GetMapping(value = "/music/{id}", produces = "audio/mp3")
     public @ResponseBody byte[] getImage(@PathVariable String id) throws IOException {
         InputStream in = getClass().getResourceAsStream("/static/" + id + ".mp3");
         return Objects.requireNonNull(in).readAllBytes();
