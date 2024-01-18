@@ -29,10 +29,9 @@ public class MainController {
         return ResponseEntity.ok(musicTickets);
     }
 
-    @GetMapping("/save")
+    @PostMapping("/save")
     public ResponseEntity<List<MusicTicket>> save(@RequestBody SaveTicketRequest request) {
         log.debug("Got request with body: {}", request);
-
         List<MusicTicket> saved = ticketService.saveBulk(request);
         return ResponseEntity.ok(saved);
     }
