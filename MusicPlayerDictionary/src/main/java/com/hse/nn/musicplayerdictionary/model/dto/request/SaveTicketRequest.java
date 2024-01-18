@@ -8,8 +8,4 @@ public class SaveTicketRequest {
     private String trackTitle;
 
     private List<SaveTicketRequest> tickets;
-
-    public String getTrackTitle() {
-        return trackTitle;
-    }
 }
