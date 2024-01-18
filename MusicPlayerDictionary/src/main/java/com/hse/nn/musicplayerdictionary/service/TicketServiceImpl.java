@@ -14,9 +14,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class TicketServiceImpl {
-    @Autowired
     private final MusicTicketRepository musicTicketRepository;
-    @Autowired
     private final TicketMapper ticketMapper;
 
 //    public Ticket saveIndex(SaveTicketIndexRequest request){
