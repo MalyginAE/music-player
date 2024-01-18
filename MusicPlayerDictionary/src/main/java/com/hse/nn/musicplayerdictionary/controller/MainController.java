@@ -29,7 +29,7 @@ public class MainController {
         return ResponseEntity.ok(musicTickets);
     }
 
-    @PostMapping("/save")
+    @GetMapping("/save")
     public ResponseEntity<List<MusicTicket>> save(@RequestBody SaveTicketRequest request) {
         log.debug("Got request with body: {}", request);
 
