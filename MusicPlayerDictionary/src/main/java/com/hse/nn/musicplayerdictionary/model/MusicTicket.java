@@ -21,5 +21,7 @@ public class MusicTicket {
     @Field(type = FieldType.Text, name = "track_title")
     private String trackTitle;
     @Field(type = FieldType.Text, name = "track_author")
-    private String track_author;
+    private String trackAuthor;
+    @Field(type = FieldType.Text, name = "track_cover")
+    private String trackCover;
 }

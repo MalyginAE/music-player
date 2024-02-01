@@ -5,7 +5,8 @@ import com.hse.nn.musicplayerdictionary.model.MusicTicket;
 import com.hse.nn.musicplayerdictionary.model.dto.request.SaveTicketRequest;
 import com.hse.nn.musicplayerdictionary.repository.MusicTicketRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +18,6 @@ public class TicketServiceImpl {
     private final MusicTicketRepository musicTicketRepository;
     private final TicketMapper ticketMapper;
 
-//    public Ticket saveIndex(SaveTicketIndexRequest request){
-//        return musicTicketRepository.save(ticketMapper.ticketDtoToTicket(request.getTicketDto()));
-//    }
-
     public List<MusicTicket> saveBulk(SaveTicketRequest request) {
         List<MusicTicket> tickets = request
                 .getTickets()
@@ -28,6 +25,10 @@ public class TicketServiceImpl {
                 .map(ticketMapper::ticketDtoToTicket)
                 .collect(Collectors.toList());
         return (List<MusicTicket>) musicTicketRepository.saveAll(tickets);
+    }
+
+    public List<MusicTicket> getMusicTickets(String title) {
+        return musicTicketRepository.findByTrackTitleContaining(title, PageRequest.of(1,10));
     }
 
 //    public FindByNameContainingResponse findByNameContaining(String name){

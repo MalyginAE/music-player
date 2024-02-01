@@ -19,13 +19,12 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Slf4j
 public class MainController {
-    private final MusicTicketRepository musicTicketRepository;
     private final TicketServiceImpl ticketService;
 
     @GetMapping("/search")
     public ResponseEntity<List<MusicTicket>> get(@RequestParam("trackTitle") String title) {
         log.debug("Got request with title: {}", title);
-        List<MusicTicket> musicTickets = musicTicketRepository.findByTrackTitleContaining(title);
+        List<MusicTicket> musicTickets = ticketService.getMusicTickets(title);
         return ResponseEntity.ok(musicTickets);
     }
 
@@ -37,6 +36,13 @@ public class MainController {
     }
 
     @GetMapping(value = "/music/{id}", produces = "audio/mp3")
+    public @ResponseBody byte[] getMusic(@PathVariable String id) throws IOException {
+        log.debug("Got request with id: {}", id);
+        InputStream in = getClass().getResourceAsStream("/static/" + id + ".mp3");
+        return Objects.requireNonNull(in).readAllBytes();
+    }
+
+    @GetMapping(value = "/image/{id}", produces = "image/png")
     public @ResponseBody byte[] getImage(@PathVariable String id) throws IOException {
         log.debug("Got request with id: {}", id);
         InputStream in = getClass().getResourceAsStream("/static/" + id + ".mp3");
