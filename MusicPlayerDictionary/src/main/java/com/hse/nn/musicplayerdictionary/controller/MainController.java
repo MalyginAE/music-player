@@ -2,7 +2,7 @@ package com.hse.nn.musicplayerdictionary.controller;
 
 import com.hse.nn.musicplayerdictionary.model.MusicTicket;
 import com.hse.nn.musicplayerdictionary.model.dto.request.SaveTicketRequest;
-import com.hse.nn.musicplayerdictionary.repository.MusicTicketRepository;
+import com.hse.nn.musicplayerdictionary.model.dto.request.response.MusicTicketResponse;
 import com.hse.nn.musicplayerdictionary.service.TicketServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +22,9 @@ public class MainController {
     private final TicketServiceImpl ticketService;
 
     @GetMapping("/search")
-    public ResponseEntity<List<MusicTicket>> get(@RequestParam("trackTitle") String title) {
+    public ResponseEntity<List<MusicTicketResponse>> get(@RequestParam("trackTitle") String title) {
         log.debug("Got request with title: {}", title);
-        List<MusicTicket> musicTickets = ticketService.getMusicTickets(title);
+        List<MusicTicketResponse> musicTickets = ticketService.getMusicTickets(title);
         return ResponseEntity.ok(musicTickets);
     }
 
@@ -38,14 +38,14 @@ public class MainController {
     @GetMapping(value = "/music/{id}", produces = "audio/mp3")
     public @ResponseBody byte[] getMusic(@PathVariable String id) throws IOException {
         log.debug("Got request with id: {}", id);
-        InputStream in = getClass().getResourceAsStream("/static/" + id + ".mp3");
+        InputStream in = getClass().getResourceAsStream("/static/music/" + id + ".mp3");
         return Objects.requireNonNull(in).readAllBytes();
     }
 
     @GetMapping(value = "/image/{id}", produces = "image/png")
     public @ResponseBody byte[] getImage(@PathVariable String id) throws IOException {
         log.debug("Got request with id: {}", id);
-        InputStream in = getClass().getResourceAsStream("/static/" + id + ".mp3");
+        InputStream in = getClass().getResourceAsStream("/static/image/" + id + ".mp3");
         return Objects.requireNonNull(in).readAllBytes();
     }
 }

@@ -3,9 +3,9 @@ package com.hse.nn.musicplayerdictionary.service;
 import com.hse.nn.musicplayerdictionary.mapper.TicketMapper;
 import com.hse.nn.musicplayerdictionary.model.MusicTicket;
 import com.hse.nn.musicplayerdictionary.model.dto.request.SaveTicketRequest;
+import com.hse.nn.musicplayerdictionary.model.dto.request.response.MusicTicketResponse;
 import com.hse.nn.musicplayerdictionary.repository.MusicTicketRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +27,11 @@ public class TicketServiceImpl {
         return (List<MusicTicket>) musicTicketRepository.saveAll(tickets);
     }
 
-    public List<MusicTicket> getMusicTickets(String title) {
-        return musicTicketRepository.findByTrackTitleContaining(title, PageRequest.of(1,10));
+    public List<MusicTicketResponse> getMusicTickets(String title) {
+        return musicTicketRepository.findByTrackTitleContaining(title, PageRequest.of(0,10))
+                .stream()
+                .map(ticketMapper::ticketToResponseTicket)
+                .toList();
     }
 
 //    public FindByNameContainingResponse findByNameContaining(String name){
