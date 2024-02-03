@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 @EnableElasticsearchRepositories
 @SpringBootApplication
 public class MusicPlayerDictionaryApplication {
-    @Transactional
     public static void main(String[] args) {
         SpringApplication.run(MusicPlayerDictionaryApplication.class, args);
     }
