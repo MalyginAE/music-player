@@ -38,14 +38,14 @@ public class MainController {
     @GetMapping(value = "/music/{id}", produces = "audio/mp3")
     public @ResponseBody byte[] getMusic(@PathVariable String id) throws IOException {
         log.debug("Got request with id: {}", id);
-        InputStream in = getClass().getResourceAsStream("/static/music/" + id + ".mp3");
+        InputStream in = getClass().getResourceAsStream("/static/music/" + id);
         return Objects.requireNonNull(in).readAllBytes();
     }
 
     @GetMapping(value = "/image/{id}", produces = "image/png")
     public @ResponseBody byte[] getImage(@PathVariable String id) throws IOException {
         log.debug("Got request with id: {}", id);
-        InputStream in = getClass().getResourceAsStream("/static/image/" + id + ".mp3");
+        InputStream in = getClass().getResourceAsStream("/static/image/" + id);
         return Objects.requireNonNull(in).readAllBytes();
     }
 }
