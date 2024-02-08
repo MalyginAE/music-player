@@ -42,6 +42,13 @@ public class MainController {
         return ResponseEntity.ok(tickets);
     }
 
+    @GetMapping("/music/new")
+    public ResponseEntity<List<MusicTicketResponse>> getNewMusic() {
+        log.debug("Got request to get new info");
+        List<MusicTicketResponse> tickets = ticketService.buildPopularTickets();
+        return ResponseEntity.ok(tickets);
+    }
+
     @GetMapping(value = "/music/{id}", produces = "audio/mp3")
     public @ResponseBody byte[] getMusic(@PathVariable String id) throws IOException {
         log.debug("Got request with id: {}", id);
