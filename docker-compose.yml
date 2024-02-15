@@ -1,15 +1,32 @@
 version: '3.5'
 services:
-  #  db:
-  #    image: postgres:12.16
-  #    container_name: postgres
-  #    ports:
-  #      - "5433:5432"
-  #    environment:
-  #      - POSTGRES_USER=postgres
-  #      - POSTGRES_PASSWORD=postgres
-  #      - POSTGRES_DB=demo
-  #      - config.support_escapes=true
+  db:
+    image: postgres:12.16
+    container_name: postgres
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=demo
+      - config.support_escapes=true
+    networks:
+      - odfe-net
+
+  redis:
+    image: redis
+    container_name: redis
+    hostname: redis
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=demo
+      - config.support_escapes=true
+    networks:
+      - odfe-net
   #  hotels:
   #    build:
   #      context: ./
@@ -22,12 +39,13 @@ services:
   #      - "8080:8080"
   elk:
     image: elasticsearch:7.17.15
+    hostname: elastic
+    container_name: elastic
     logging:
       driver: "json-file"
       options:
         max-size: "1000m"
         max-file: "10"
-    container_name: odfe-node
     environment:
       - discovery.type=single-node
       - node.name=odfe-node
@@ -47,6 +65,8 @@ services:
     networks:
       - odfe-net
   app:
+    hostname: app
+    container_name: app
     build:
       context: ./MusicPlayerDictionary
       dockerfile: Dockerfile
@@ -54,7 +74,7 @@ services:
       - "elk"
     environment:
       #      - необходимо прописать ipconfig и вставить сюда ip локальной сети, потому что localhost в контейнере свой
-      - SPRING_ELASTICSEARCH_URIS=172.51.0.2:9200
+      - SPRING_ELASTICSEARCH_URIS=elastic:9200
       #      - выставил в true ,чтобы скрипты накатывались, можно потом подумать будет как их в образе накатить получше
     #      - SPRING_LIQUIBASE_ENABLED=true
     ports:
