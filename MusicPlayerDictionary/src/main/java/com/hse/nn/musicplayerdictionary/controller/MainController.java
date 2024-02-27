@@ -62,4 +62,11 @@ public class MainController {
         InputStream in = getClass().getResourceAsStream("/static/image/" + id);
         return Objects.requireNonNull(in).readAllBytes();
     }
+
+    @GetMapping(value = "/image/{id}", produces = "image/png")
+    public @ResponseBody byte[] saveLike(@PathVariable String id) throws IOException {
+        log.debug("Got request with id: {}", id);
+        InputStream in = getClass().getResourceAsStream("/static/image/" + id);
+        return Objects.requireNonNull(in).readAllBytes();
+    }
 }
