@@ -7,13 +7,13 @@ import java.util.List;
 
 @Data
 public class SaveTicketRequest {
-    @Schema(name = "Заголовок тикета", description = "По нему можно производить поиск")
+    @Schema( description = "По нему можно производить поиск")
     private String trackTitle;
-    @Schema(name = "Присвоится автоматически")
+    @Schema(description = "Присвоиться автоматически")
     private String trackId;
-    @Schema(name = "")
+    @Schema(description = "id image")
     private String trackCoverId;
-    @Schema(name = "Автор произведения")
+    @Schema(description = "Автор произведения")
     private String trackAuthor;
 
     private List<SaveTicketRequest> tickets;

@@ -39,38 +39,6 @@ public class MainController {
         return ResponseEntity.ok(saved);
     }
 
-    @Operation(summary = "Получение популярной музыки", description = "Вся музыка на моках и не является актуальной.")
-    @GetMapping("/music/popular")
-    public ResponseEntity<List<MusicTicketResponse>> getPopularMusic() {
-        log.debug("Got request to get popular info");
-        List<MusicTicketResponse> tickets = ticketService.buildPopularTickets();
-        return ResponseEntity.ok(tickets);
-    }
-
-    @Operation(summary = "Недавно выпущенная музыка")
-    @GetMapping("/music/new")
-    public ResponseEntity<List<MusicTicketResponse>> getNewMusic() {
-        log.debug("Got request to get new info");
-        List<MusicTicketResponse> tickets = ticketService.buildPopularTickets();
-        return ResponseEntity.ok(tickets);
-    }
-
-    @Operation(summary = "Получение музыки по id")
-    @GetMapping(value = "/music/{id}", produces = "audio/mp3")
-    public @ResponseBody byte[] getMusic(@PathVariable String id) throws IOException {
-        log.debug("Got request with id: {}", id);
-        InputStream in = getClass().getResourceAsStream("/static/music/" + id);
-        return Objects.requireNonNull(in).readAllBytes();
-    }
-
-    @Operation(summary = "Получение изображения по id")
-    @GetMapping(value = "/image/{id}", produces = "image/png")
-    public @ResponseBody byte[] getImage(@PathVariable String id) throws IOException {
-        log.debug("Got request with id: {}", id);
-        InputStream in = getClass().getResourceAsStream("/static/image/" + id);
-        return Objects.requireNonNull(in).readAllBytes();
-    }
-
 
 //    @GetMapping(value = "/image/{id}", produces = "image/png")
 //    public @ResponseBody byte[] saveLike(@PathVariable String id) throws IOException {
