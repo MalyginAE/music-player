@@ -1,0 +1,26 @@
+package com.hse.nn.musicplayerdictionary.config;
+
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.oauth2.client.OAuth2ClientConfigurer;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.SecurityFilterChain;
+
+import static org.springframework.security.config.Customizer.withDefaults;
+
+@Configuration
+public class SecurityConfig {
+    @Bean
+    @Order(SecurityProperties.BASIC_AUTH_ORDER)
+    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests((requests) -> requests.requestMatchers("/hse/api/v1/music-player-dictionary/music/**").permitAll()
+                .anyRequest().authenticated());
+        http.oauth2Login(it -> it.defaultSuccessUrl("/hse/api/v1/music-player-dictionary/music/popular"));
+//        http.httpBasic(withDefaults());
+        return http.build();
+    }
+}
