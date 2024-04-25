@@ -1,6 +1,5 @@
 package com.hse.nn.musicplayerdictionary.service;
 
-import com.hse.nn.musicplayerdictionary.model.Role;
 import com.hse.nn.musicplayerdictionary.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -9,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -17,20 +15,11 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findUserByUserName(username).map(UserService::mapUserToUserDetails)
-                .orElseThrow(() -> new UsernameNotFoundException("user not found"));
-    }
-
-    private static UserDetails mapUserToUserDetails(com.hse.nn.musicplayerdictionary.model.entity.User user) {
-        return User.builder()
-                .username(user.getUserName())
-                .password(user.getPassword())
-                .roles(user.getRole().name()).build();
-    }
-
-    public UserDetails create(String email) {
-        var user = new com.hse.nn.musicplayerdictionary.model.entity.User(null, email, Role.USER, "123");
-        var savedUser = userRepository.save(user);
-        return mapUserToUserDetails(savedUser);
+        return userRepository.findUserByUserName(username).map(user ->
+                        User.builder()
+                                .username(user.getUserName())
+                                .password(user.getPassword())
+                                .roles(user.getRole().name()).build())
+                .orElseThrow(() -> new UsernameNotFoundException("user Not found"));
     }
 }
