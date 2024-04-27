@@ -40,8 +40,7 @@ import java.util.function.Consumer;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final UserService userService;
-    @Autowired
-    private ClientRegistrationRepository clientRegistrationRepository;
+
 
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
