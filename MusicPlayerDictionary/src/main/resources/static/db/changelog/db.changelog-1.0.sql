@@ -15,5 +15,6 @@ CREATE TABLE IF NOT EXISTS "user"(
     id SERIAL PRIMARY KEY,
     role varchar(255) NOT NULL default 'user',
     username varchar(255) NOT NULL,
-    password varchar(255) NOT NULL default '{noop}123'
+    password varchar(255) NOT NULL default '{noop}123',
+    provider varchar(255) NOT NULL default 'LOCAL'
 );

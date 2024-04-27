@@ -1,5 +1,6 @@
 package com.hse.nn.musicplayerdictionary.model.entity;
 
+import com.hse.nn.musicplayerdictionary.model.Provider;
 import com.hse.nn.musicplayerdictionary.model.Role;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,4 +21,7 @@ public class User {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
 }
