@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -32,4 +34,8 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Provider provider;
+
+    @OneToMany(mappedBy = "id")
+    private List<Music> musicList;
+
 }

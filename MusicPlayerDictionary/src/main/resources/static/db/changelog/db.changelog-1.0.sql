@@ -2,22 +2,31 @@
 
 --changeset malyginae:1
 
-CREATE TABLE IF NOT EXISTS music_player_dictionaries
+CREATE TABLE IF NOT EXISTS music
 (
     id         SERIAL PRIMARY KEY,
-
-    music_id   INT UNIQUE NOT NULL,
-    image_id   INT UNIQUE NOT NULL,
-    updated_at TIMESTAMP
+    music_name varchar(255) NOT NULL,
+    author     varchar(255) NOT NULL,
+    image_id   INT UNIQUE   NOT NULL
+--     updated_at TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS users
 (
-    id       BIGSERIAL PRIMARY KEY,
-    user_role     varchar(255) NOT NULL default 'user',
-    username varchar(255) NOT NULL,
-    password varchar(255) NOT NULL default '{noop}123',
-    provider varchar(255) NOT NULL default 'LOCAL'
+    id        BIGSERIAL PRIMARY KEY,
+    music_id  INT references music (id),
+    user_role varchar(255) NOT NULL default 'user',
+    username  varchar(255) NOT NULL,
+    password  varchar(255) NOT NULL default '{noop}123',
+    provider  varchar(255) NOT NULL default 'LOCAL'
 );
 
-INSERT INTO users VALUES (10,'ADMIN', 'andrey.malygin2002@gmail.com', '');
+CREATE TABLE IF NOT EXISTS likes
+(
+    id       SERIAL PRIMARY KEY,
+    music_id INT references music (id),
+    user_id  INT references users (id)
+);
+
+INSERT INTO users(id, user_role, username)
+VALUES (10, 'ADMIN', 'andrey.malygin2002@gmail.com');

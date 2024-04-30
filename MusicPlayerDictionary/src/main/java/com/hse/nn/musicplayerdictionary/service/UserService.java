@@ -2,7 +2,7 @@ package com.hse.nn.musicplayerdictionary.service;
 
 import com.hse.nn.musicplayerdictionary.model.Provider;
 import com.hse.nn.musicplayerdictionary.model.Role;
-import com.hse.nn.musicplayerdictionary.repository.UserRepository;
+import com.hse.nn.musicplayerdictionary.repository.postgres.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,7 +30,11 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDetails create(String email) {
-        var user = new com.hse.nn.musicplayerdictionary.model.entity.User(null, email, Role.USER, "123", Provider.GOOGLE);
+        var user = com.hse.nn.musicplayerdictionary.model.entity.User.builder()
+                .userName(email)
+                .role(Role.USER)
+                .provider( Provider.GOOGLE)
+                .build();
         var savedUser = userRepository.save(user);
         return mapUserToUserDetails(savedUser);
     }
