@@ -3,12 +3,14 @@ package com.hse.nn.musicplayerdictionary.model.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Builder
 @Table(name = "likes")
 @Entity
+@Data
 @AllArgsConstructor
 public class Like {
     @Id

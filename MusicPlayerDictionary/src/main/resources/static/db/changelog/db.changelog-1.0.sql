@@ -28,7 +28,8 @@ CREATE TABLE IF NOT EXISTS likes
 (
     id       SERIAL PRIMARY KEY,
     music_id INT references music (id),
-    user_id  INT references users (id)
+    user_id  INT references users (id),
+    UNIQUE (music_id, user_id)
 );
 
 INSERT INTO users(id, user_role, username)
