@@ -22,11 +22,14 @@ public class Music {
     private String author;
 
     @Column
-    private String image_id;
+    private Integer imageId;
 
-    @ManyToOne
-//    @JoinColumn(name = "user_id")
-    private User user;
+    @Column
+    private String externalSearchId;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+////    @JoinColumn(name = "user_id")
+//    private User user;
 
 
 }
