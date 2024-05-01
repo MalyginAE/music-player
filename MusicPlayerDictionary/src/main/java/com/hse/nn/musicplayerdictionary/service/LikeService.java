@@ -39,6 +39,9 @@ public class LikeService {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findUserByUserName(name).orElseThrow();
         List<Like> likes = likeRepository.findAllByUser(user);
-        return likes.stream().map(Like::getMusic).map(ticketMapper::ticketToResponseTickets).toList();
+        return likes.stream()
+                .map(Like::getMusic)
+                .map(ticketMapper::ticketToResponseTickets)
+                .toList();
     }
 }

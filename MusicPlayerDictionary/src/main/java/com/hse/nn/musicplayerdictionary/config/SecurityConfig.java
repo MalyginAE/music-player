@@ -21,6 +21,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import java.lang.reflect.Method;
 import java.util.Set;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -42,7 +44,7 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/hse/api/v1/music-player-dictionary/music/popular")
                         .userInfoEndpoint(userInfo -> userInfo.oidcUserService(buildOIDC()))
                 );
-//        http.httpBasic(withDefaults());
+        http.httpBasic(withDefaults());
         return http.build();
     }
 
