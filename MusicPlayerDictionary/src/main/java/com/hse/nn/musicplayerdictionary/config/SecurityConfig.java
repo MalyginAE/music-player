@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
@@ -17,6 +18,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -37,9 +39,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> requests.requestMatchers("/hse/api/v1/music-player-dictionary/**").hasAnyRole("ADMIN", "USER")
                         .requestMatchers("/oauth/**").permitAll()
                         .anyRequest().authenticated())
+                .sessionManagement(sessionManagement-> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.NEVER))
                 .oauth2Login(it -> it
                         .authorizationEndpoint(authorizationEndpointConfig -> authorizationEndpointConfig
                                 .authorizationRedirectStrategy(new CustomRedirectStrategy())
+
                         )
                         .defaultSuccessUrl("/hse/api/v1/music-player-dictionary/music/popular")
                         .userInfoEndpoint(userInfo -> userInfo.oidcUserService(buildOIDC()))
