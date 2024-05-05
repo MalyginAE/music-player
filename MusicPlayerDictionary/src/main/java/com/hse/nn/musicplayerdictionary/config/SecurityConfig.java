@@ -37,7 +37,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests.requestMatchers("/hse/api/v1/music-player-dictionary/**").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/oauth/**").permitAll()
+                        .requestMatchers("/oauth/**","/swagger.*").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManagement-> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.NEVER))
                 .oauth2Login(it -> it
