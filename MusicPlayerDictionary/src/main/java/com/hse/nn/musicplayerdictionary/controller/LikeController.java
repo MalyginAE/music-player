@@ -25,11 +25,19 @@ private final LikeService likeService;
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Сохранение лайка в бд")
+    @Operation(summary = "Удаление лайка в бд")
     @DeleteMapping("/like")
     public ResponseEntity resetLike(@RequestParam String trackId) {
         log.debug("Got request with id: {}", trackId);
         likeService.deleteLike(trackId);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Проверка наличия лайка в бд")
+    @DeleteMapping("/check")
+    public ResponseEntity checkLike(@RequestParam String trackId) {
+        log.debug("Got request with id: {}", trackId);
+        likeService.checkLike(trackId);
         return ResponseEntity.ok().build();
     }
 

@@ -1,5 +1,6 @@
 package com.hse.nn.musicplayerdictionary.service;
 
+import com.hse.nn.musicplayerdictionary.exception.DataNotFoundException;
 import com.hse.nn.musicplayerdictionary.mapper.TicketMapper;
 import com.hse.nn.musicplayerdictionary.model.dto.request.response.MusicTicketResponse;
 import com.hse.nn.musicplayerdictionary.model.entity.Like;
@@ -8,6 +9,7 @@ import com.hse.nn.musicplayerdictionary.model.entity.User;
 import com.hse.nn.musicplayerdictionary.repository.postgres.LikeRepository;
 import com.hse.nn.musicplayerdictionary.repository.postgres.MusicRepository;
 import com.hse.nn.musicplayerdictionary.repository.postgres.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -35,14 +37,23 @@ public class LikeService {
         likeRepository.save(like);
     }
 
+    @Transactional
     public void deleteLike(String trackId) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findUserByUserName(name).orElseThrow();
         Music music = musicRepository
                 .findById(Long.valueOf(trackId))
                 .orElseThrow(() -> new IllegalArgumentException("track not found"));
-
         likeRepository.deleteLikeByMusicAndUser(music, user);
+    }
+
+    public void checkLike(String trackId) {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findUserByUserName(name).orElseThrow();
+        Music music = musicRepository
+                .findById(Long.valueOf(trackId))
+                .orElseThrow(() -> new IllegalArgumentException("track not found"));
+        likeRepository.findByUserAndMusic(user, music).orElseThrow(() -> new DataNotFoundException("track not found"));
     }
 
     public List<MusicTicketResponse> getMusicTickets() {
