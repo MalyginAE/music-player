@@ -36,10 +36,16 @@ public class SecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((requests) -> requests.requestMatchers("/hse/api/v1/music-player-dictionary/**").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/oauth/**","/swagger.*").permitAll()
+                .authorizeHttpRequests((requests) -> requests.requestMatchers("/hse/api/v1/music-player-dictionary/**")
+                        .hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/oauth/**",
+                                "/swagger-ui/.*",
+                                "/hse/api/v1/music-player-dictionary/music/.*",
+                        "/hse/api/v1/music-player-dictionary/image/.*"
+                        ).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManagement-> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.NEVER))
+                .httpBasic(withDefaults())
                 .oauth2Login(it -> it
                         .authorizationEndpoint(authorizationEndpointConfig -> authorizationEndpointConfig
                                 .authorizationRedirectStrategy(new CustomRedirectStrategy())
@@ -48,7 +54,6 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/hse/api/v1/music-player-dictionary/music/popular")
                         .userInfoEndpoint(userInfo -> userInfo.oidcUserService(buildOIDC()))
                 );
-        http.httpBasic(withDefaults());
         return http.build();
     }
 
