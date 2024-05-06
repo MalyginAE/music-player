@@ -35,6 +35,16 @@ public class LikeService {
         likeRepository.save(like);
     }
 
+    public void deleteLike(String trackId) {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findUserByUserName(name).orElseThrow();
+        Music music = musicRepository
+                .findById(Long.valueOf(trackId))
+                .orElseThrow(() -> new IllegalArgumentException("track not found"));
+
+        likeRepository.deleteLikeByMusicAndUser(music, user);
+    }
+
     public List<MusicTicketResponse> getMusicTickets() {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findUserByUserName(name).orElseThrow();

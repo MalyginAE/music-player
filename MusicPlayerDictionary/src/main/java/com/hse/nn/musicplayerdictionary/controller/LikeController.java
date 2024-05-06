@@ -26,6 +26,14 @@ private final LikeService likeService;
     }
 
     @Operation(summary = "Сохранение лайка в бд")
+    @DeleteMapping("/like")
+    public ResponseEntity resetLike(@RequestParam String trackId) {
+        log.debug("Got request with id: {}", trackId);
+        likeService.deleteLike(trackId);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Сохранение лайка в бд")
     @GetMapping()
     public ResponseEntity<List<MusicTicketResponse>> likes() {
         log.debug("Got likes request");
