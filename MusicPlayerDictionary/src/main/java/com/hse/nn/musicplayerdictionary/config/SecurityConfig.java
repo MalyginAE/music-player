@@ -36,15 +36,6 @@ public class SecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((requests) -> requests.requestMatchers("/hse/api/v1/music-player-dictionary/**")
-                        .hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/oauth/**",
-                                "/swagger-ui/.*",
-                                "/hse/api/v1/music-player-dictionary/music/.*",
-                        "/hse/api/v1/music-player-dictionary/image/.*"
-                        ).permitAll()
-                        .anyRequest().authenticated())
-                .sessionManagement(sessionManagement-> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.NEVER))
                 .httpBasic(withDefaults())
                 .oauth2Login(it -> it
                         .authorizationEndpoint(authorizationEndpointConfig -> authorizationEndpointConfig
@@ -53,7 +44,18 @@ public class SecurityConfig {
                         )
                         .defaultSuccessUrl("/hse/api/v1/music-player-dictionary/music/popular")
                         .userInfoEndpoint(userInfo -> userInfo.oidcUserService(buildOIDC()))
-                );
+                )
+                .authorizeHttpRequests((requests) -> requests
+                                .requestMatchers("/oauth/*?",
+                                        "/swagger-ui/*?",
+                                        "/hse/api/v1/music-player-dictionary/music/*?",
+                                        "/hse/api/v1/music-player-dictionary/image/*?"
+                                ).permitAll()
+                        .requestMatchers("/hse/api/v1/music-player-dictionary/*?")
+                        .hasAnyRole("ADMIN", "USER")
+                        .anyRequest().authenticated())
+                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.NEVER));
+
         return http.build();
     }
 
