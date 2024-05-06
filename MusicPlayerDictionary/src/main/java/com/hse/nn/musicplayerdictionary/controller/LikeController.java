@@ -34,7 +34,7 @@ private final LikeService likeService;
     }
 
     @Operation(summary = "Проверка наличия лайка в бд")
-    @DeleteMapping("/check")
+    @GetMapping("/check")
     public ResponseEntity checkLike(@RequestParam String trackId) {
         log.debug("Got request with id: {}", trackId);
         likeService.checkLike(trackId);
