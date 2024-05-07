@@ -3,7 +3,7 @@ package com.hse.nn.musicplayerdictionary.service;
 import com.hse.nn.musicplayerdictionary.mapper.TicketMapper;
 import com.hse.nn.musicplayerdictionary.model.MusicTicket;
 import com.hse.nn.musicplayerdictionary.model.dto.request.SaveTicketRequest;
-import com.hse.nn.musicplayerdictionary.model.dto.request.response.MusicTicketResponse;
+import com.hse.nn.musicplayerdictionary.model.dto.response.MusicTicketResponse;
 import com.hse.nn.musicplayerdictionary.repository.MusicTicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;

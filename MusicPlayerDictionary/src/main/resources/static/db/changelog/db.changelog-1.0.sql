@@ -32,6 +32,15 @@ CREATE TABLE IF NOT EXISTS likes
     UNIQUE (music_id, user_id)
 );
 
+CREATE TABLE IF NOT EXISTS playlists
+(
+    id            SERIAL PRIMARY KEY,
+    playlist_name varchar(255) NOT NULL default '',
+    music_id      INT references music (id),
+    user_id       INT references users (id),
+    UNIQUE (music_id, user_id, playlist_name)
+);
+
 INSERT INTO users(id, user_role, username)
 VALUES (10, 'ADMIN', 'andrey.malygin2002@gmail.com');
 

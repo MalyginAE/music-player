@@ -1,4 +1,4 @@
-package com.hse.nn.musicplayerdictionary.model.dto.request.response;
+package com.hse.nn.musicplayerdictionary.model.dto.response;
 
 
 public record MusicTicketResponse(String trackId,

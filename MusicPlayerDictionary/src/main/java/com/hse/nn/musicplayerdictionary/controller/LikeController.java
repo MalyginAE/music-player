@@ -1,6 +1,6 @@
 package com.hse.nn.musicplayerdictionary.controller;
 
-import com.hse.nn.musicplayerdictionary.model.dto.request.response.MusicTicketResponse;
+import com.hse.nn.musicplayerdictionary.model.dto.response.MusicTicketResponse;
 import com.hse.nn.musicplayerdictionary.service.LikeService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;

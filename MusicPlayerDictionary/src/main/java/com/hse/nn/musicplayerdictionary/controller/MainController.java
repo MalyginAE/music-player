@@ -3,21 +3,17 @@ package com.hse.nn.musicplayerdictionary.controller;
 import com.hse.nn.musicplayerdictionary.mapper.MusicMapper;
 import com.hse.nn.musicplayerdictionary.model.MusicTicket;
 import com.hse.nn.musicplayerdictionary.model.dto.request.SaveTicketRequest;
-import com.hse.nn.musicplayerdictionary.model.dto.request.response.MusicTicketResponse;
+import com.hse.nn.musicplayerdictionary.model.dto.response.MusicTicketResponse;
 import com.hse.nn.musicplayerdictionary.model.entity.Music;
 import com.hse.nn.musicplayerdictionary.repository.postgres.MusicRepository;
 import com.hse.nn.musicplayerdictionary.service.TicketServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/hse/api/v1/music-player-dictionary")
