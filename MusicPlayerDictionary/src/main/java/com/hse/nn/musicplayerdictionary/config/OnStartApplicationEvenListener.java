@@ -47,8 +47,6 @@ public class OnStartApplicationEvenListener {
                     .build()
     );
     private static final Logger log = LoggerFactory.getLogger(OnStartApplicationEvenListener.class);
-
-
     private final MusicTicketRepository musicTicketRepository;
 
     @EventListener(classes = ApplicationStartedEvent.class)
