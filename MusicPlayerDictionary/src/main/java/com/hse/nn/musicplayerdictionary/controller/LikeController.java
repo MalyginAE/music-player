@@ -25,7 +25,7 @@ private final LikeService likeService;
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Удаление лайка в бд")
+    @Operation(summary = "Удаление лайка из бд")
     @DeleteMapping("/like")
     public ResponseEntity resetLike(@RequestParam String trackId) {
         log.debug("Got request with id: {}", trackId);

@@ -29,7 +29,7 @@ public class LikeService {
         User user = userRepository.findUserByUserName(name).orElseThrow();
         Music music = musicRepository
                 .findById(Long.valueOf(trackId))
-                .orElseThrow(() -> new IllegalArgumentException("track not found"));
+                .orElseThrow(() -> new DataNotFoundException("track not found"));
         Like like = Like.builder()
                 .user(user)
                 .music(music)
@@ -43,7 +43,7 @@ public class LikeService {
         User user = userRepository.findUserByUserName(name).orElseThrow();
         Music music = musicRepository
                 .findById(Long.valueOf(trackId))
-                .orElseThrow(() -> new IllegalArgumentException("track not found"));
+                .orElseThrow(() -> new DataNotFoundException("track not found"));
         likeRepository.deleteLikeByMusicAndUser(music, user);
     }
 
@@ -52,7 +52,7 @@ public class LikeService {
         User user = userRepository.findUserByUserName(name).orElseThrow();
         Music music = musicRepository
                 .findById(Long.valueOf(trackId))
-                .orElseThrow(() -> new IllegalArgumentException("track not found"));
+                .orElseThrow(() -> new DataNotFoundException("track not found"));
         likeRepository.findByUserAndMusic(user, music).orElseThrow(() -> new DataNotFoundException("track not found"));
     }
 

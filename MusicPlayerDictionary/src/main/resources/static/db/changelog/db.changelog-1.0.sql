@@ -40,3 +40,12 @@ VALUES (1, 'Улетай', 'Три дня дождя', 1, 1);
 
 INSERT INTO music(id, music_name, author, track_id, image_id)
 VALUES (2, 'Владимир Высоцкий', 'Утренняя гимнастика', 2, 2);
+
+INSERT INTO music(id, music_name, author, track_id, image_id)
+VALUES (3, 'Дым', 'Егор Крид feat. JONY', 3, 3);
+
+INSERT INTO music(id, music_name, author, track_id, image_id)
+VALUES (4, 'I Want It That Way', 'PHURS ,BOOTY LEAK, Michelle Ray', 4, 4);
+
+INSERT INTO music(id, music_name, author, track_id, image_id)
+VALUES (5, 'I Want It That Way', 'PHURS ,BOOTY LEAK, Michelle Ray', 5, 5);

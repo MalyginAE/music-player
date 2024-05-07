@@ -35,11 +35,12 @@ public class TicketServiceImpl {
     }
 
     public List<MusicTicketResponse> buildPopularTickets() {
-        MusicTicketResponse aigel = new MusicTicketResponse("1", "Пыяла", "АИГЕЛ", "1");
-        MusicTicketResponse dymok = new MusicTicketResponse("2", "Дымок", "Ицык Цыпер, Игорь Дыба", "1");
+        MusicTicketResponse yletai = new MusicTicketResponse("1", "Улетай", "Три дня дождя", "1");
+        MusicTicketResponse gimanstica = new MusicTicketResponse("2", "Гимнастика", "Владимир Высоцкий", "2");
+        MusicTicketResponse dym = new MusicTicketResponse("3", "Дым", "Егор Крид, JONY", "3");
 //        MusicTicketResponse aigel = new MusicTicketResponse("3", "Пыяла", "АИГЕЛ", "1");
 //        MusicTicketResponse aigel = new MusicTicketResponse("4", "Пыяла", "АИГЕЛ", "1");
-        return List.of(aigel,dymok);
+        return List.of(yletai,gimanstica,dym);
     }
 
 
