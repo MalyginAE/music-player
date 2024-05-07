@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController()
-@RequestMapping("/hse/api/v1/music-player-dictionary/playlist")
+@RequestMapping("/hse/api/v1/music-player-dictionary/playlists")
 @RequiredArgsConstructor
 @Slf4j
 public class PlayListController {

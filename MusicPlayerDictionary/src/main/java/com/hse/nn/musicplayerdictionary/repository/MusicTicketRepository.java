@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface MusicTicketRepository extends ElasticsearchRepository<MusicTicket, String> {
     List<MusicTicket> findByTrackTitleContaining(String name, Pageable pageable);
+    List<MusicTicket> findAll();
 }
