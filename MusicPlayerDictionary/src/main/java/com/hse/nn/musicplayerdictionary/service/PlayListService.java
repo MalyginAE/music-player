@@ -81,4 +81,29 @@ public class PlayListService {
         playList.addPlayListMusic(savedPlayListMusic);
         playListRepository.save(playList);
     }
+
+    @Transactional
+    public void deleteMusicInPlaylist(String playlistName, String musicId) {
+
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findUserByUserName(userName).orElseThrow();
+        PlayList playList = playListRepository.findByPlaylistNameAndUser(playlistName, user)
+                .orElseThrow(() -> new DataNotFoundException("playlist not found"));
+        Music music = musicRepository.findById(Long.valueOf(musicId)).orElseThrow(() -> new DataNotFoundException("music not found"));
+
+        PlayListMusic savedPlayListMusic = playlistMusicRepository.findByPlayListAndMusic(playList, music)
+                .orElseThrow(() -> new DataNotFoundException("playlist not found"));
+        playlistMusicRepository.delete(savedPlayListMusic);
+    }
+
+    @Transactional
+    public void deletePlaylist(String playlistName) {
+
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findUserByUserName(userName).orElseThrow();
+        PlayList playList = playListRepository.findByPlaylistNameAndUser(playlistName, user)
+                .orElseThrow(() -> new DataNotFoundException("playlist not found"));
+        playListRepository.delete(playList);
+    }
 }
+

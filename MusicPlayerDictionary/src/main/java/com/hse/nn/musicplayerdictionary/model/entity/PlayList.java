@@ -21,7 +21,7 @@ public class PlayList {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToMany(mappedBy = "playList")
+    @OneToMany(mappedBy = "playList", cascade = {CascadeType.REMOVE})
     @Builder.Default
     private List<PlayListMusic> playListMusics = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class PlayList {
     private User user;
 
     public void addPlayListMusic(PlayListMusic playListMusic) {
-    playListMusics.add(playListMusic);
-playListMusic.setPlayList(this);
+        playListMusics.add(playListMusic);
+        playListMusic.setPlayList(this);
     }
 }
