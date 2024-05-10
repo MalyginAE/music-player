@@ -47,7 +47,8 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests((requests) -> requests
                                 .requestMatchers("/oauth/*?",
-                                        "/swagger-ui/*?",
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui/**",
                                         "/hse/api/v1/music-player-dictionary/music/*?",
                                         "/hse/api/v1/music-player-dictionary/image/*?"
                                 ).permitAll()

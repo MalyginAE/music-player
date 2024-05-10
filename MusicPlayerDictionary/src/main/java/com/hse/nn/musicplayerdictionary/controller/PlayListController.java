@@ -1,5 +1,6 @@
 package com.hse.nn.musicplayerdictionary.controller;
 
+import com.hse.nn.musicplayerdictionary.model.dto.response.MusicTicketResponse;
 import com.hse.nn.musicplayerdictionary.model.dto.response.PlaylistResponse;
 import com.hse.nn.musicplayerdictionary.service.PlayListService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class PlayListController {
-private final PlayListService playListService;
+    private final PlayListService playListService;
 
     @Operation(summary = "Добавление плейлиста пользователю в бд")
     @PostMapping("/playlist")
@@ -27,12 +28,30 @@ private final PlayListService playListService;
     }
 
     @Operation(summary = "Получение плейлистов пользователя")
-    @GetMapping()
+    @GetMapping
     public ResponseEntity getPlaylists() {
         log.debug("Got request");
         List<PlaylistResponse> playlists = playListService.getPlaylists();
 //        likeService.saveLike(trackId);
         return ResponseEntity.ok(playlists);
+    }
+
+    @Operation(summary = "Прикрепление трека к плейлисту")
+    @PostMapping("/track")
+    public ResponseEntity saveTrackToPlaylist(String name, String trackId) {
+        log.debug("Got request with trackId: {}", trackId);
+         playListService.addMusicInPlaylist(name, trackId);
+//        likeService.saveLike(trackId);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Прикрепление трека к плейлисту")
+    @GetMapping("/tracks")
+    public ResponseEntity findTracksInPlaylist(String name) {
+        log.debug("Got request with name: {}", name);
+        List<MusicTicketResponse> ticketResponses = playListService.getMusicByPlaylistName(name);
+//        likeService.saveLike(trackId);
+        return ResponseEntity.ok(ticketResponses);
     }
 
 

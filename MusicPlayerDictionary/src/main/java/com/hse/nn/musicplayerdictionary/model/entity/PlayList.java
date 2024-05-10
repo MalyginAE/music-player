@@ -21,10 +21,9 @@ public class PlayList {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToMany()
+    @OneToMany(mappedBy = "playList")
     @Builder.Default
-    @JoinColumn(name = "music_id")
-    private List<Music> music = new ArrayList<>();
+    private List<PlayListMusic> playListMusics = new ArrayList<>();
 
     @Column
     private String playlistName;
@@ -33,4 +32,8 @@ public class PlayList {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public void addPlayListMusic(PlayListMusic playListMusic) {
+    playListMusics.add(playListMusic);
+playListMusic.setPlayList(this);
+    }
 }

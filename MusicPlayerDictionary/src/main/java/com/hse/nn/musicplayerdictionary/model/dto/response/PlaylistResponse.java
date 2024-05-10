@@ -1,6 +1,6 @@
 package com.hse.nn.musicplayerdictionary.model.dto.response;
 
-import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-public record PlaylistResponse(List<MusicTicketResponse> tickets, String playlistName) {
+public record PlaylistResponse( @Schema( description = "Имя плейлиста") String playlistName) {
 }

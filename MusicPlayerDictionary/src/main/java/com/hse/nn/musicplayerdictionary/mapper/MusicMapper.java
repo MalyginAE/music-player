@@ -13,4 +13,6 @@ public interface MusicMapper {
     @Mapping(target = "imageId", source = "trackCoverId")
     @Mapping(target = "externalSearchId", source = "ticket_no")
     Music ticketToResponseTicket(MusicTicket musicTicket);
+
+
 }

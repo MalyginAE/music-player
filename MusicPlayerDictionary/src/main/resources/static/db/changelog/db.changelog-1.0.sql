@@ -36,9 +36,16 @@ CREATE TABLE IF NOT EXISTS playlists
 (
     id            SERIAL PRIMARY KEY,
     playlist_name varchar(255) NOT NULL default '',
-    music_id      INT references music (id),
     user_id       INT references users (id),
-    UNIQUE (music_id, user_id, playlist_name)
+    UNIQUE ( user_id, playlist_name)
+);
+
+CREATE TABLE IF NOT EXISTS playlist_music
+(
+    id            SERIAL PRIMARY KEY,
+    playlist_id INT references playlists(id),
+    music_id      INT references music (id),
+    UNIQUE (music_id, playlist_id)
 );
 
 INSERT INTO users(id, user_role, username)
