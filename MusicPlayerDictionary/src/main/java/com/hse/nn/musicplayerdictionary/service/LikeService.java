@@ -58,7 +58,7 @@ public class LikeService {
 
     public List<MusicTicketResponse> getMusicTickets() {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findUserByUserName(name).orElseThrow();
+        User user = userRepository.findUserByUserName(name).orElseThrow(() -> new DataNotFoundException("user not found"));
         List<Like> likes = likeRepository.findAllByUser(user);
         return likes.stream()
                 .map(Like::getMusic)

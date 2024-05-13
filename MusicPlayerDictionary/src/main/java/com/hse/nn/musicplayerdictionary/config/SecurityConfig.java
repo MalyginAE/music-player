@@ -29,9 +29,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
     private final UserService userService;
 
-
-
-
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -66,6 +63,7 @@ public class SecurityConfig {
         var grantedAuthoritiesConverter = new CustomJwtGrantedAuthoritiesConverter(userService);
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setPrincipalClaimName("email");
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
         return jwtAuthenticationConverter;
     }
