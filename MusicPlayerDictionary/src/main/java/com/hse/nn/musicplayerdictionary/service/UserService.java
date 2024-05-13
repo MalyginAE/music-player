@@ -5,6 +5,7 @@ import com.hse.nn.musicplayerdictionary.model.Role;
 import com.hse.nn.musicplayerdictionary.repository.postgres.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
@@ -32,6 +34,7 @@ public class UserService implements UserDetailsService {
 
 
     public UserDetails create(String email) {
+        log.info("User will created with email :{}", email);
         var user = com.hse.nn.musicplayerdictionary.model.entity.User.builder()
                 .userName(email)
                 .password("123")
