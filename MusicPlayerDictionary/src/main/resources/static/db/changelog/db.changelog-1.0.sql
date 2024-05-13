@@ -37,14 +37,14 @@ CREATE TABLE IF NOT EXISTS playlists
     id            SERIAL PRIMARY KEY,
     playlist_name varchar(255) NOT NULL default '',
     user_id       INT references users (id),
-    UNIQUE ( user_id, playlist_name)
+    UNIQUE (user_id, playlist_name)
 );
 
 CREATE TABLE IF NOT EXISTS playlist_music
 (
-    id            SERIAL PRIMARY KEY,
-    playlist_id INT references playlists(id),
-    music_id      INT references music (id),
+    id          SERIAL PRIMARY KEY,
+    playlist_id INT references playlists (id),
+    music_id    INT references music (id),
     UNIQUE (music_id, playlist_id)
 );
 
@@ -55,7 +55,7 @@ INSERT INTO music(id, music_name, author, track_id, image_id)
 VALUES (1, 'Улетай', 'Три дня дождя', 1, 1);
 
 INSERT INTO music(id, music_name, author, track_id, image_id)
-VALUES (2, 'Владимир Высоцкий', 'Утренняя гимнастика', 2, 2);
+VALUES (2, 'Утренняя гимнастика', 'Владимир Высоцкий', 2, 2);
 
 INSERT INTO music(id, music_name, author, track_id, image_id)
 VALUES (3, 'Дым', 'Егор Крид feat. JONY', 3, 3);

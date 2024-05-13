@@ -32,6 +32,7 @@ public class UserService implements UserDetailsService {
     public UserDetails create(String email) {
         var user = com.hse.nn.musicplayerdictionary.model.entity.User.builder()
                 .userName(email)
+                .password("123")
                 .role(Role.USER)
                 .provider( Provider.GOOGLE)
                 .build();
