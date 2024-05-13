@@ -3,6 +3,7 @@ package com.hse.nn.musicplayerdictionary.service;
 import com.hse.nn.musicplayerdictionary.model.Provider;
 import com.hse.nn.musicplayerdictionary.model.Role;
 import com.hse.nn.musicplayerdictionary.repository.postgres.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +29,7 @@ public class UserService implements UserDetailsService {
                 .password(user.getPassword())
                 .roles(user.getRole().name()).build();
     }
+
 
     public UserDetails create(String email) {
         var user = com.hse.nn.musicplayerdictionary.model.entity.User.builder()

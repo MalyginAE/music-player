@@ -36,6 +36,7 @@ public class SecurityConfig {
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
+                .headers(heders -> heders.httpStrictTransportSecurity(it->{}).disable())
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(withDefaults())
                 .oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer ->
