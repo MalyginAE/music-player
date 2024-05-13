@@ -1,38 +1,23 @@
 package com.hse.nn.musicplayerdictionary.config;
 
-import com.hse.nn.musicplayerdictionary.service.CustomRedirectStrategy;
 import com.hse.nn.musicplayerdictionary.service.UserService;
-import com.nimbusds.jose.util.Base64;
 import lombok.RequiredArgsConstructor;
-import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.base64.Base64Encoder;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.cglib.proxy.Proxy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
-import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFilter;
-import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -63,7 +48,8 @@ public class SecurityConfig {
                                         "/v3/api-docs/**",
                                         "/swagger-ui/**",
                                         "/hse/api/v1/music-player-dictionary/music/*?",
-                                        "/hse/api/v1/music-player-dictionary/image/*?"
+                                        "/hse/api/v1/music-player-dictionary/image/*?",
+                                        "/actuator/health"
                                 ).permitAll()
                         .requestMatchers("/hse/api/v1/music-player-dictionary/*?")
 //                        .hasAnyRole("ADMIN", "USER")

@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
                 .userName(email)
                 .password("123")
                 .role(Role.USER)
-                .provider( Provider.GOOGLE)
+                .provider(Provider.GOOGLE)
                 .build();
         var savedUser = userRepository.save(user);
         return mapUserToUserDetails(savedUser);
