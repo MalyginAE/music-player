@@ -58,6 +58,8 @@ services:
       - "8080:8080"
     networks:
       - odfe-net
+    volumes:
+      - /hse/log:/usr/src/app/var/log
 networks:
   odfe-net:
     ipam:
