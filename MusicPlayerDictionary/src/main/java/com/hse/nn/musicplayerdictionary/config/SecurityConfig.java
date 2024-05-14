@@ -35,6 +35,8 @@ public class SecurityConfig {
         http
                 .headers(headers -> headers.httpStrictTransportSecurity(it -> {
                 }).disable())
+                .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(withDefaults())
                 .oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer ->
