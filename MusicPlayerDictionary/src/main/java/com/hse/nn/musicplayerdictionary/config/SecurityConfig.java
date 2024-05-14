@@ -33,28 +33,27 @@ public class SecurityConfig {
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .headers(heders -> heders.httpStrictTransportSecurity(it->{}).disable())
+                .headers(headers -> headers.httpStrictTransportSecurity(it -> {
+                }).disable())
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(withDefaults())
                 .oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer ->
                         httpSecurityOAuth2ResourceServerConfigurer.jwt(jwtConfigurer ->
                                 jwtConfigurer
-                                        .jwtAuthenticationConverter( jwtAuthenticationConverter())
-                                        ))
+                                        .jwtAuthenticationConverter(jwtAuthenticationConverter())
+                        ))
                 .authorizeHttpRequests((requests) -> requests
-                                .requestMatchers("/oauth/*?",
-                                        "/v3/api-docs/**",
-                                        "/swagger-ui/**",
-                                        "/hse/api/v1/music-player-dictionary/music/*?",
-                                        "/hse/api/v1/music-player-dictionary/image/*?",
-                                        "/actuator/health"
-                                ).permitAll()
+                        .requestMatchers("/oauth/*?",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/hse/api/v1/music-player-dictionary/music/*?",
+                                "/hse/api/v1/music-player-dictionary/image/*?",
+                                "/actuator/health"
+                        ).permitAll()
                         .requestMatchers("/hse/api/v1/music-player-dictionary/*?")
 //                        .hasAnyRole("ADMIN", "USER")
                         .permitAll()
-                        .anyRequest().authenticated())
-                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.NEVER));
-
+                        .anyRequest().authenticated());
         return http.build();
     }
 
