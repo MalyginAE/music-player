@@ -2,13 +2,10 @@ package com.hse.nn.musicplayerdictionary.service;
 
 import com.hse.nn.musicplayerdictionary.model.Provider;
 import com.hse.nn.musicplayerdictionary.model.Role;
+import com.hse.nn.musicplayerdictionary.model.entity.User;
 import com.hse.nn.musicplayerdictionary.repository.postgres.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -16,32 +13,28 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserService implements UserDetailsService {
+public class UserService {
     private final UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findUserByUserName(username).map(UserService::mapUserToUserDetails)
+
+
+    public User findUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findUserByUserName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found"));
     }
 
-    private static UserDetails mapUserToUserDetails(com.hse.nn.musicplayerdictionary.model.entity.User user) {
-        return User.builder()
-                .username(user.getUserName())
-                .password(user.getPassword())
-                .roles(user.getRole().name()).build();
-    }
 
 
-    public UserDetails create(String email) {
+
+
+    public User create(String email) {
         log.info("User will created with email :{}", email);
         var user = com.hse.nn.musicplayerdictionary.model.entity.User.builder()
                 .userName(email)
-                .password("123")
                 .role(Role.USER)
                 .provider(Provider.GOOGLE)
                 .build();
         var savedUser = userRepository.save(user);
-        return mapUserToUserDetails(savedUser);
+        return savedUser;
     }
 }

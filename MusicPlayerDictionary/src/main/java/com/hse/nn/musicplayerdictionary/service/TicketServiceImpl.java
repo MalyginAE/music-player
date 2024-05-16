@@ -28,6 +28,7 @@ public class TicketServiceImpl {
     }
 
     public List<MusicTicketResponse> getMusicTickets(String title) {
+        title = title.replaceAll("\\s+","");
         return musicTicketRepository.findByTrackTitleContaining(title, PageRequest.of(0,10))
                 .stream()
                 .map(ticketMapper::ticketToResponseTicket)

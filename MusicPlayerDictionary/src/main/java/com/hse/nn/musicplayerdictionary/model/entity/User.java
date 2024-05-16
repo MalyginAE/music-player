@@ -29,9 +29,6 @@ public class User {
     @Column(name = "user_role", nullable = false)
     private Role role;
 
-    @Column(name = "password", nullable = false)
-    private String password;
-
     @Enumerated(EnumType.STRING)
     private Provider provider;
 

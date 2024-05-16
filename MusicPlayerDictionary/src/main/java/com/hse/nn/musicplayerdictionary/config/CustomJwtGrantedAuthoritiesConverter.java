@@ -1,5 +1,6 @@
 package com.hse.nn.musicplayerdictionary.config;
 
+import com.hse.nn.musicplayerdictionary.model.entity.User;
 import com.hse.nn.musicplayerdictionary.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.util.Collection;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -21,14 +23,13 @@ public class CustomJwtGrantedAuthoritiesConverter implements Converter<Jwt, Coll
     @Override
     public Collection<GrantedAuthority> convert(Jwt source) {
         String email = source.getClaim("email");
-        UserDetails userDetails;
+        User userDetails;
         try {
-
-            userDetails = userService.loadUserByUsername(email);
+            userDetails = userService.findUserByUsername(email);
         } catch (UsernameNotFoundException exception) {
             log.info("user not fount, start register");
             userDetails = userService.create(email);
         }
-        return (Collection<GrantedAuthority>) userDetails.getAuthorities();
+        return List.of(userDetails.getRole());
     }
 }

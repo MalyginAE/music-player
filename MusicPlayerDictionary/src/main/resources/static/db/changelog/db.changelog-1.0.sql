@@ -19,9 +19,14 @@ CREATE TABLE IF NOT EXISTS users
     id        BIGSERIAL PRIMARY KEY,
     music_id  INT references music (id),
     user_role varchar(255) NOT NULL default 'user',
-    username  varchar(255) NOT NULL UNIQUE ,
-    password  varchar(255) NOT NULL default '{noop}123',
+    username  varchar(255) NOT NULL UNIQUE,
     provider  varchar(255) NOT NULL default 'LOCAL'
+);
+
+CREATE TABLE IF NOT EXISTS tokens
+(
+    refresh_token varchar PRIMARY KEY,
+    user_id      INT references users (id)
 );
 
 CREATE TABLE IF NOT EXISTS likes
