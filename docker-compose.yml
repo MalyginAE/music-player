@@ -49,6 +49,7 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - "elk"
+      - "db"
     environment:
       #      - необходимо прописать ipconfig и вставить сюда ip локальной сети, потому что localhost в контейнере свой
       - SPRING_ELASTICSEARCH_URIS=elastic:9200
