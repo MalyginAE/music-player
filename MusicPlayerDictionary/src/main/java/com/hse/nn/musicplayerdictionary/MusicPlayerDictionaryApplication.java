@@ -29,6 +29,7 @@ public class MusicPlayerDictionaryApplication {
         CaffeineCacheManager caffeineCacheManager = new CaffeineCacheManager();
         caffeineCacheManager.setCacheNames(List.of("tokens"));
         caffeineCacheManager.setCaffeine(caffeine);
+        caffeineCacheManager.setAsyncCacheMode(true);
 
         return caffeineCacheManager;
     }
