@@ -4,10 +4,12 @@ import com.hse.nn.musicplayerdictionary.model.dto.response.TokenResponse;
 import com.hse.nn.musicplayerdictionary.model.entity.Token;
 import com.hse.nn.musicplayerdictionary.model.entity.User;
 import com.hse.nn.musicplayerdictionary.repository.postgres.TokenRepository;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.impl.TextCodec;
 import io.jsonwebtoken.impl.security.HmacAesAeadAlgorithm;
 import io.jsonwebtoken.impl.security.PasswordSpec;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AccountExpiredException;
@@ -18,6 +20,8 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +31,7 @@ import java.util.Map;
 @Slf4j
 public class TokenServiceImpl implements TokenService {
     private String key = "qwertyuiopasdfghjkljdfnjsafdjsflfhaasdjfhdskfkjafkjasfhlkfjzxcvbnm";//todo to env
+
     private final Map<String, String> accessTokens = new HashMap<>();
     private final TokenRepository tokenRepository;
     private final UserService userService;
@@ -71,11 +76,12 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public boolean verifyToken(String key) {
-        if (!accessTokens.containsKey(key)) {
-            return false;
-//           throw new InvalidBearerTokenException("Access token");
-        }
-        return true;
+    public boolean verifyToken(String token) {
+        JwtParser parser = Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(Decoders.BASE64.decode(key)))
+                .build();
+        boolean signed = parser.isSigned(token);
+        Jwt<?, ?> jwt = parser.parse(token);
+        return accessTokens.containsKey(token) && signed;
     }
 }
