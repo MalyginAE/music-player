@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.token.Token;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,10 +29,11 @@ public class TokenController {
 
     @PostMapping
     public ResponseEntity auth() {
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        JwtAuthenticationToken authentication = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
         User user = userService.tryToFindUserByUsername(name)
                 .orElseGet(() -> userService.create(name));
-        var token = tokenService.allocateToken(name,user);
+        var token = tokenService.allocateToken(authentication.getToken().getTokenValue(),user);
         return ResponseEntity.ok(token);
     }
 }

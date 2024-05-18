@@ -24,8 +24,9 @@ CREATE TABLE IF NOT EXISTS users
 
 CREATE TABLE IF NOT EXISTS tokens
 (
-    refresh_token varchar PRIMARY KEY,
-    user_id      INT references users (id)
+    id            BIGSERIAL PRIMARY KEY,
+    refresh_token varchar UNIQUE,
+    user_id       INT references users (id) UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS likes

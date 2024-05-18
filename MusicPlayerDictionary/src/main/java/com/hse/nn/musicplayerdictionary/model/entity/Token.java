@@ -1,6 +1,5 @@
 package com.hse.nn.musicplayerdictionary.model.entity;
 
-import com.hse.nn.musicplayerdictionary.model.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,8 +10,11 @@ import lombok.*;
 @Builder
 @Table(name = "tokens")
 public class Token {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     @Column(name = "refresh_token", nullable = false)
     private String refreshToken;
 
@@ -20,4 +22,14 @@ public class Token {
     @OneToOne
     @ToString.Exclude
     private User user;
+
+    public Token(String refreshToken, User user) {
+        this.refreshToken = refreshToken;
+        this.user = user;
+    }
+
+    public Token setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+        return this;
+    }
 }

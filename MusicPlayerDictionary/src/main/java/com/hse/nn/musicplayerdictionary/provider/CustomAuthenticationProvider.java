@@ -12,10 +12,8 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.oauth2.jwt.BadJwtException;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtException;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.core.OAuth2TokenValidator;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthenticationToken;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -27,24 +25,21 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
-    private String key = "qwertyuiopasdfghjkljdfnjsafdjsflfhaasdjfhdskfkjafkjasfhlkfjzxcvbnm";//todo to env
-    private final TokenService tokenService;
-
-    private final NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withSecretKey(Keys.hmacShaKeyFor(Decoders.BASE64.decode(key))).build(); //.build();
+    private String key = "qwertyuiopasdfghjkljdfnjsafdjsflfhaasdjfhdskfkjafkjasfhlkfjzxcvbnm";
+    private final OAuth2TokenValidator<Jwt> jwtValidators = JwtValidators.createDefault();
+    private final NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withSecretKey(Keys.hmacShaKeyFor(Decoders.BASE64.decode(key))).build();
 
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
         BearerTokenAuthenticationToken bearer = (BearerTokenAuthenticationToken) authentication;
         Jwt jwt = getJwt(bearer);
-//        if (!tokenService.verifyToken(bearer.getToken())) {
-//            return null;
-//        }
+        jwtValidators.validate(jwt);
         String email = jwt.getClaimAsString("sub");
         AbstractAuthenticationToken token = new JwtAuthenticationToken(jwt, List.of(Role.USER), email);
         if (token.getDetails() == null) {
             token.setDetails(bearer.getDetails());
         }
-        log.debug("Authenticated token successfully");
+        log.debug("Custom authenticated token successfully");
         return token;
     }
 

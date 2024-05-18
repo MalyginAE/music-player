@@ -24,13 +24,15 @@ public class TokenServiceImpl implements TokenService {
     public TokenResponse allocateToken(String refToken, User user) {
         String accessToken = generateAccessToken(user.getUserName());
         String refreshToken = null;
-        //validateRefreshToken
         Token token = user.getToken();
         if (token == null) {
             refreshToken = generateRefreshToken(user.getUserName());
             tokenRepository.save(new Token(refreshToken, user));
-        } else  {
+        } else if (refToken.equals(token.getRefreshToken())){
             refreshToken = token.getRefreshToken();
+        }else {
+            refreshToken = generateRefreshToken(user.getUserName());
+            tokenRepository.save(token.setRefreshToken(refreshToken));
         }
         return new TokenResponse(refreshToken, accessToken);
     }
@@ -52,6 +54,4 @@ public class TokenServiceImpl implements TokenService {
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
     }
-
-
 }
