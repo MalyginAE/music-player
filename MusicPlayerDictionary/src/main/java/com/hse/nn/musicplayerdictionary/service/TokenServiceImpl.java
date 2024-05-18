@@ -6,8 +6,12 @@ import com.hse.nn.musicplayerdictionary.model.entity.User;
 import com.hse.nn.musicplayerdictionary.repository.postgres.TokenRepository;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,26 +22,25 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 public class TokenServiceImpl implements TokenService {
-    private String key = "qwertyuiopasdfghjkljdfnjsafdjsflfhaasdjfhdskfkjafkjasfhlkfjzxcvbnm";//todo to env
-
-    private final Map<String, String> accessTokens = new HashMap<>();
+    @Value("${token}")
+    private String key;
+    private final CacheManager cacheManager;
     private final TokenRepository tokenRepository;
-    private final UserService userService;
 
     @Override
     public TokenResponse allocateToken(String extendedInformation, User user) {
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-
+        Cache tokens = cacheManager.getCache("tokens");
         var token = tokenRepository.findTokenByRefreshToken(extendedInformation)
                 .map(tokenData -> {
-                    var accessToken = generateAccessToken(name);
-                    accessTokens.put(accessToken, tokenData.getRefreshToken());
+                    var accessToken = generateAccessToken(user.getUserName());
+                    tokens.put(accessToken, tokenData.getRefreshToken());
                     return new TokenResponse(tokenData.getRefreshToken(), accessToken);
                 })
                 .orElseGet(() -> {
-                    String refreshToken = generateRefreshToken(name);
-                    String accessToken = generateAccessToken(name);
-                    accessTokens.put(accessToken, refreshToken);
+                    String refreshToken = generateRefreshToken(user.getUserName());
+                    String accessToken = generateAccessToken(user.getUserName());
+                    log.debug("generated tokens: {}, refresh token:{}", accessToken, refreshToken);
+                    tokens.put(accessToken, refreshToken);
                     tokenRepository.save(new Token(refreshToken, user));
                     return new TokenResponse(refreshToken, accessToken);
                 });
@@ -62,13 +65,10 @@ public class TokenServiceImpl implements TokenService {
                 .compact();
     }
 
+    @SneakyThrows
     @Override
     public boolean verifyToken(String token) {
-//        JwtParser parser = Jwts.parser()
-//                .verifyWith(Keys.hmacShaKeyFor(Decoders.BASE64.decode(key)))
-//                .build();
-//        boolean signed = parser.isSigned(token);
-//        Jwt<?, ?> jwt = parser.parse(token);
-        return accessTokens.containsKey(token);
+        Cache tokens = cacheManager.getCache("tokens");
+        return tokens.retrieve(token).get() != null;
     }
 }
