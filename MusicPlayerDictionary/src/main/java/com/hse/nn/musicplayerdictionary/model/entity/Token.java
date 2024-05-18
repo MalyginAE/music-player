@@ -2,10 +2,7 @@ package com.hse.nn.musicplayerdictionary.model.entity;
 
 import com.hse.nn.musicplayerdictionary.model.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
@@ -21,5 +18,6 @@ public class Token {
 
     @JoinColumn(name = "user_id", nullable = false)
     @OneToOne
+    @ToString.Exclude
     private User user;
 }

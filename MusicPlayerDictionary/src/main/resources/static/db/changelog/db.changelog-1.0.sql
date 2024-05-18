@@ -17,7 +17,6 @@ CREATE TABLE IF NOT EXISTS music
 CREATE TABLE IF NOT EXISTS users
 (
     id        BIGSERIAL PRIMARY KEY,
-    music_id  INT references music (id),
     user_role varchar(255) NOT NULL default 'user',
     username  varchar(255) NOT NULL UNIQUE,
     provider  varchar(255) NOT NULL default 'LOCAL'

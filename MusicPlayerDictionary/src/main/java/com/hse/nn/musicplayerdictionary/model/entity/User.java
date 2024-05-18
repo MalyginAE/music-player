@@ -32,6 +32,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
+    @OneToOne(mappedBy = "user")
+    private Token token;
+
     @OneToMany(mappedBy = "id")
     private List<Music> musicList;
 

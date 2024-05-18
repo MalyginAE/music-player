@@ -36,9 +36,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
         BearerTokenAuthenticationToken bearer = (BearerTokenAuthenticationToken) authentication;
         Jwt jwt = getJwt(bearer);
-        if (!tokenService.verifyToken(bearer.getToken())) {
-            return null;
-        }
+//        if (!tokenService.verifyToken(bearer.getToken())) {
+//            return null;
+//        }
         String email = jwt.getClaimAsString("email");
         AbstractAuthenticationToken token = new JwtAuthenticationToken(jwt, List.of(Role.USER), email);
         if (token.getDetails() == null) {
