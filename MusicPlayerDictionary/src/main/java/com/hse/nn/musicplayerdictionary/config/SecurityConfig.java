@@ -45,8 +45,6 @@ public class SecurityConfig {
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-//                .headers(headers -> headers.httpStrictTransportSecurity(it -> {
-//                }).disable())
                 .authenticationProvider(authProvider)
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer
@@ -64,9 +62,6 @@ public class SecurityConfig {
                                 "/hse/api/v1/music-player-dictionary/image/*?",
                                 "/actuator/health"
                         ).permitAll()
-//                        .requestMatchers("/hse/api/v1/music-player-dictionary/*?")
-//                        .hasAnyRole("ADMIN", "USER")
-//                        .permitAll()
                         .anyRequest().authenticated());
         return http.build();
     }

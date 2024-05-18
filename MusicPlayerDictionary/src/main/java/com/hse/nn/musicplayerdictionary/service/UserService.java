@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +23,10 @@ public class UserService {
     public User findUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findUserByUserName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found"));
+    }
+
+    public Optional<User> tryToFindUserByUsername(String username){
+        return userRepository.findUserByUserName(username);
     }
 
 

@@ -3,6 +3,8 @@ package com.hse.nn.musicplayerdictionary.provider;
 import com.hse.nn.musicplayerdictionary.model.Role;
 import com.hse.nn.musicplayerdictionary.service.TokenService;
 import io.jsonwebtoken.impl.security.PasswordSpec;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -16,6 +18,7 @@ import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthenticationToken;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 
@@ -25,17 +28,20 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
+    private String key = "qwertyuiopasdfghjkljdfnjsafdjsflfhaasdjfhdskfkjafkjasfhlkfjzxcvbnm";//todo to env
     private final TokenService tokenService;
-    private final NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withSecretKey(new PasswordSpec("123".toCharArray())).build(); //.build();
+
+    private final NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withSecretKey(Keys.hmacShaKeyFor(Decoders.BASE64.decode(key))).build(); //.build();
 
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
         BearerTokenAuthenticationToken bearer = (BearerTokenAuthenticationToken) authentication;
-        if (!tokenService.verifyToken(bearer.getToken())){
+        Jwt jwt = getJwt(bearer);
+        if (!tokenService.verifyToken(bearer.getToken())) {
             return null;
         }
-        Jwt jwt = getJwt(bearer);
-        AbstractAuthenticationToken token = new JwtAuthenticationToken(jwt, List.of(Role.USER));
+        String email = jwt.getClaimAsString("email");
+        AbstractAuthenticationToken token = new JwtAuthenticationToken(jwt, List.of(Role.USER), email);
         if (token.getDetails() == null) {
             token.setDetails(bearer.getDetails());
         }

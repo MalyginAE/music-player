@@ -1,7 +1,9 @@
 package com.hse.nn.musicplayerdictionary.controller;
 
 import com.hse.nn.musicplayerdictionary.model.dto.response.TokenResponse;
+import com.hse.nn.musicplayerdictionary.model.entity.User;
 import com.hse.nn.musicplayerdictionary.service.TokenService;
+import com.hse.nn.musicplayerdictionary.service.UserService;
 import com.nimbusds.jose.JWEAlgorithm;
 import com.nimbusds.jwt.JWT;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class TokenController {
     private final TokenService tokenService;
+    private final UserService userService;
 
     @PostMapping
     public ResponseEntity auth() {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        var token = tokenService.allocateToken(name);
+        User user = userService.tryToFindUserByUsername(name)
+                .orElseGet(() -> userService.create(name));
+        var token = tokenService.allocateToken(name,user);
         return ResponseEntity.ok(token);
-
     }
 }
