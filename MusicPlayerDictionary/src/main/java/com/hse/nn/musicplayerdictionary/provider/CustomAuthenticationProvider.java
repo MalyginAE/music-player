@@ -39,7 +39,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 //        if (!tokenService.verifyToken(bearer.getToken())) {
 //            return null;
 //        }
-        String email = jwt.getClaimAsString("email");
+        String email = jwt.getClaimAsString("sub");
         AbstractAuthenticationToken token = new JwtAuthenticationToken(jwt, List.of(Role.USER), email);
         if (token.getDetails() == null) {
             token.setDetails(bearer.getDetails());

@@ -41,7 +41,7 @@ private final LikeService likeService;
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Сохранение лайка в бд")
+    @Operation(summary = "Получение всех лайкой пользователя в бд")
     @GetMapping()
     public ResponseEntity<List<MusicTicketResponse>> likes() {
         log.debug("Got likes request");
