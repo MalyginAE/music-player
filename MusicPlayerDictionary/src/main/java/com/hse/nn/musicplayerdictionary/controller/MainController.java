@@ -7,6 +7,7 @@ import com.hse.nn.musicplayerdictionary.model.dto.response.MusicTicketResponse;
 import com.hse.nn.musicplayerdictionary.model.entity.Music;
 import com.hse.nn.musicplayerdictionary.repository.postgres.MusicRepository;
 import com.hse.nn.musicplayerdictionary.service.TicketServiceImpl;
+import com.hse.nn.musicplayerdictionary.service.TicketServiceWithNativeQuery;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,14 +22,17 @@ import java.util.List;
 @Slf4j
 public class MainController {
     private final TicketServiceImpl ticketService;
+    private final TicketServiceWithNativeQuery ticketServiceWithNativeQuery;
     private final MusicRepository musicRepository;
     private final MusicMapper musicMapper;
 
     @GetMapping("/search")
     @Operation(summary = "Поиск трека по заголовку")
-    public ResponseEntity<List<MusicTicketResponse>> get(@RequestParam("trackTitle") String title) {
+    public ResponseEntity<List<MusicTicketResponse>> get(@RequestParam("trackTitle") String title,
+                                                         @RequestParam(value = "pageNumber", required = false, defaultValue = "0")
+                                                         String pageNumber) {
         log.debug("Got request with title: {}", title);
-        List<MusicTicketResponse> musicTickets = ticketService.getMusicTickets(title);
+        List<MusicTicketResponse> musicTickets = ticketServiceWithNativeQuery.getMusicTickets(title, Integer.parseInt(pageNumber));
         return ResponseEntity.ok(musicTickets);
     }
 

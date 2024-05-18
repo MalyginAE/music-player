@@ -45,7 +45,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         if (token.getDetails() == null) {
             token.setDetails(bearer.getDetails());
         }
-        log.debug("Authenticated token");
+        log.debug("Authenticated token successfully");
         return token;
     }
 
