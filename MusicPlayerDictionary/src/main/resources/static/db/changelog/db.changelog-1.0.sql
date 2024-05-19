@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS music
 (
-    id                 SERIAL PRIMARY KEY,
+    id                 BIGSERIAL PRIMARY KEY,
     music_name         varchar(255) NOT NULL,
     author             varchar(255) NOT NULL,
     image_id           INT UNIQUE   NOT NULL,
@@ -26,30 +26,30 @@ CREATE TABLE IF NOT EXISTS tokens
 (
     id            BIGSERIAL PRIMARY KEY,
     refresh_token varchar UNIQUE,
-    user_id       INT references users (id) UNIQUE NOT NULL
+    user_id       BIGINT references users (id) UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS likes
 (
-    id       SERIAL PRIMARY KEY,
-    music_id INT references music (id),
-    user_id  INT references users (id),
+    id       BIGSERIAL PRIMARY KEY,
+    music_id BIGINT references music (id),
+    user_id  BIGINT references users (id),
     UNIQUE (music_id, user_id)
 );
 
 CREATE TABLE IF NOT EXISTS playlists
 (
-    id            SERIAL PRIMARY KEY,
+    id            BIGSERIAL PRIMARY KEY,
     playlist_name varchar(255) NOT NULL default '',
-    user_id       INT references users (id),
+    user_id       BIGINT references users (id),
     UNIQUE (user_id, playlist_name)
 );
 
 CREATE TABLE IF NOT EXISTS playlist_music
 (
-    id          SERIAL PRIMARY KEY,
-    playlist_id INT references playlists (id),
-    music_id    INT references music (id),
+    id          BIGSERIAL PRIMARY KEY,
+    playlist_id BIGINT references playlists (id),
+    music_id    BIGINT references music (id),
     UNIQUE (music_id, playlist_id)
 );
 
