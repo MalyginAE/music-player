@@ -17,9 +17,6 @@ import java.util.Optional;
 @Slf4j
 public class UserService {
     private final UserRepository userRepository;
-
-
-
     public User findUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findUserByUserName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found"));
@@ -28,10 +25,6 @@ public class UserService {
     public Optional<User> tryToFindUserByUsername(String username){
         return userRepository.findUserByUserName(username);
     }
-
-
-
-
 
     public User create(String email) {
         log.info("User will created with email :{}", email);
