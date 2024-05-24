@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class RestControllerAdvice extends ResponseEntityExceptionHandler {
+
     @ExceptionHandler(DataNotFoundException.class)
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     public void exception(DataNotFoundException dataNotFoundException) {

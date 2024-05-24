@@ -9,8 +9,8 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
-      - config.support_escapes=true
+      - POSTGRES_DB=app
+#      - config.support_escapes=true
     networks:
       - odfe-net
 
@@ -51,8 +51,12 @@ services:
       - "elk"
       - "db"
     environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/app?prepareThreshold=0
+      - SPRING_LIQUIBASE_URL=jdbc:postgresql://localhost:5432/app?prepareThreshold=0
+      - spring.liquibase.url
       #      - необходимо прописать ipconfig и вставить сюда ip локальной сети, потому что localhost в контейнере свой
       - SPRING_ELASTICSEARCH_URIS=elastic:9200
+      - token=qwertyuiopasdfghjkljdfnjsafdjsflfhaasdjfhdskfkjafkjasfhlkfjzxcvbnm
       #      - выставил в true ,чтобы скрипты накатывались, можно потом подумать будет как их в образе накатить получше
     #      - SPRING_LIQUIBASE_ENABLED=true
     ports:
