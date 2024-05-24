@@ -19,6 +19,5 @@ public interface TicketMapper  {
     @Mapping(target = "trackAuthor", source = "author")
     @Mapping(target = "trackCoverId", source = "imageId")
     @Mapping(target = "trackId", source = "id")
-//    @Mapping(target = "ticket_no", source = "externalSearchId")
     MusicTicketResponse ticketToResponseTickets(Music music);
 }

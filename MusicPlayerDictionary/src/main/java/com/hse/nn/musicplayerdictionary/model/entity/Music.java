@@ -28,10 +28,4 @@ public class Music {
 
     @Column
     private String externalSearchId;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-////    @JoinColumn(name = "user_id")
-//    private User user;
-
-
 }

@@ -32,7 +32,6 @@ public class PlayListController {
     public ResponseEntity deletePlaylist(@RequestParam String name) {
         log.debug("Got request with name: {}", name);
         playListService.deletePlaylist(name);
-//        likeService.saveLike(trackId);
         return ResponseEntity.ok().build();
     }
 
@@ -41,7 +40,6 @@ public class PlayListController {
     public ResponseEntity getPlaylists() {
         log.debug("Got request");
         List<PlaylistResponse> playlists = playListService.getPlaylists();
-//        likeService.saveLike(trackId);
         return ResponseEntity.ok(playlists);
     }
 
@@ -50,7 +48,6 @@ public class PlayListController {
     public ResponseEntity saveTrackToPlaylist(String name, String trackId) {
         log.debug("Got request with trackId: {}", trackId);
          playListService.addMusicInPlaylist(name, trackId);
-//        likeService.saveLike(trackId);
         return ResponseEntity.ok().build();
     }
     @Operation(summary = "Удаление трека в плейлисте")
@@ -58,7 +55,6 @@ public class PlayListController {
     public ResponseEntity deleteTrackToPlaylist(String name, String trackId) {
         log.debug("Got request with trackId: {}", trackId);
          playListService.deleteMusicInPlaylist(name, trackId);
-//        likeService.saveLike(trackId);
         return ResponseEntity.ok().build();
     }
 
@@ -67,7 +63,6 @@ public class PlayListController {
     public ResponseEntity findTracksInPlaylist(String name) {
         log.debug("Got request with name: {}", name);
         List<MusicTicketResponse> ticketResponses = playListService.getMusicByPlaylistName(name);
-//        likeService.saveLike(trackId);
         return ResponseEntity.ok(ticketResponses);
     }
 
