@@ -52,7 +52,7 @@ services:
       - "db"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/app?prepareThreshold=0
-      - SPRING_LIQUIBASE_URL=jdbc:postgresql://localhost:5432/app?prepareThreshold=0
+      - SPRING_LIQUIBASE_URL=jdbc:postgresql://postgres:5432/app?prepareThreshold=0
       - spring.liquibase.url
       #      - необходимо прописать ipconfig и вставить сюда ip локальной сети, потому что localhost в контейнере свой
       - SPRING_ELASTICSEARCH_URIS=elastic:9200
