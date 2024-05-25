@@ -11,8 +11,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=app
 #      - config.support_escapes=true
-    networks:
-      - odfe-net
+
 
 
   elk:
@@ -33,8 +32,7 @@ services:
     ports:
       - "9200:9200"
       - "9600:9600"
-    networks:
-      - odfe-net
+
 
   app:
     hostname: app
@@ -53,25 +51,9 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/app?prepareThreshold=0
       - SPRING_LIQUIBASE_URL=jdbc:postgresql://postgres:5432/app?prepareThreshold=0
-      #      - необходимо прописать ipconfig и вставить сюда ip локальной сети, потому что localhost в контейнере свой
       - SPRING_ELASTICSEARCH_URIS=elastic:9200
       - token=qwertyuiopasdfghjkljdfnjsafdjsflfhaasdjfhdskfkjafkjasfhlkfjzxcvbnm
       #      - выставил в true ,чтобы скрипты накатывались, можно потом подумать будет как их в образе накатить получше
     #      - SPRING_LIQUIBASE_ENABLED=true
     ports:
       - "8080:8080"
-    networks:
-      - odfe-net
-    volumes:
-      - /hse/log:/usr/src/app/var/log
-networks:
-  odfe-net:
-    ipam:
-      config:
-        - subnet: 172.51.0.0/24
-
-
-volumes:
-  odfe-data:
-  db:
-  logstash:
