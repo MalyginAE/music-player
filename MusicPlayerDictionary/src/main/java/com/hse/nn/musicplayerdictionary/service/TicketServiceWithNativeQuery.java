@@ -32,6 +32,11 @@ public class TicketServiceWithNativeQuery {
                                 .query(title)
                         )
                 )
+                .withQuery(q ->
+                        q.matchPhrasePrefix(m -> m
+                                .field("track_title")
+                                .slop(1)
+                                .query(title)))
                 .withPageable(pageRequest)
                 .build();
 
