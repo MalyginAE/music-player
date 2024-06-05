@@ -28,9 +28,9 @@ public class TokenServiceImpl implements TokenService {
         if (token == null) {
             refreshToken = generateRefreshToken(user.getUserName());
             tokenRepository.save(new Token(refreshToken, user));
-        } else if (refToken.equals(token.getRefreshToken())){
+        } else if (refToken.equals(token.getRefreshToken())) {
             refreshToken = token.getRefreshToken();
-        }else {
+        } else {
             refreshToken = generateRefreshToken(user.getUserName());
             tokenRepository.save(token.setRefreshToken(refreshToken));
         }

@@ -10,8 +10,6 @@ CREATE TABLE IF NOT EXISTS music
     image_id           INT UNIQUE   NOT NULL,
     track_id           INT UNIQUE   NOT NULL,
     external_search_id VARCHAR(255) UNIQUE
---     user_id  INT references users (id)
---     updated_at TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS users

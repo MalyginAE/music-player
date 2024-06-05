@@ -4,8 +4,8 @@ services:
     image: postgres:latest
     container_name: postgres
     hostname: postgres
-    ports:
-      - "5432:5432"
+#    ports:
+#      - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -29,9 +29,9 @@ services:
       - discovery.seed_hosts=odfe-node
       - bootstrap.memory_lock=true
       - xpack.security.enabled=false
-    ports:
-      - "9200:9200"
-      - "9600:9600"
+#    ports:
+#      - "9200:9200"
+#      - "9600:9600"
 
 
   app:
