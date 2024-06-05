@@ -28,6 +28,7 @@ public class TicketServiceWithNativeQuery {
                 .withQuery(q -> q
                         .matchPhrase(m -> m
                                 .field("track_title")
+                                .slop(1)
                                 .query(title)
                         )
                 )
