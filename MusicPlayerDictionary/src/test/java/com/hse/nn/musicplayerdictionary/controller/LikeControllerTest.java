@@ -36,7 +36,7 @@ class LikeControllerTest {
         //when
         ResponseEntity responseEntity = likeController.like("1");
         //then
-        Assertions.assertEquals("200 OK",responseEntity.getStatusCode().toString());
+        Assertions.assertEquals("200 OK", responseEntity.getStatusCode().toString());
     }
 
     @Test
@@ -44,7 +44,7 @@ class LikeControllerTest {
         //when
         ResponseEntity responseEntity = likeController.resetLike("1");
         //then
-        Assertions.assertEquals("200 OK",responseEntity.getStatusCode().toString());
+        Assertions.assertEquals("200 OK", responseEntity.getStatusCode().toString());
     }
 
     @Test
@@ -52,7 +52,7 @@ class LikeControllerTest {
         //when
         ResponseEntity responseEntity = likeController.checkLike("1");
         //then
-        Assertions.assertEquals("200 OK",responseEntity.getStatusCode().toString());
+        Assertions.assertEquals("200 OK", responseEntity.getStatusCode().toString());
     }
 
     @Test
@@ -62,7 +62,7 @@ class LikeControllerTest {
         //when
         ResponseEntity responseEntity = likeController.likes();
         //then
-        Assertions.assertEquals("200 OK",responseEntity.getStatusCode().toString());
+        Assertions.assertEquals("200 OK", responseEntity.getStatusCode().toString());
         Assertions.assertNotNull(responseEntity.getBody());
     }
 }
